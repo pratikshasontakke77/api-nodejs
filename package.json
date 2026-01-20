@@ -4,13 +4,13 @@
   "description": "Habit Tracker API for Node.js course",
   "main": "src/index.ts",
   "type": "module",
-  "scripts": {
-    "dev": "node --watch src/index.ts",
-    "start": "node src/index.ts",
-    "test": "vitest run",
-    "test:watch": "vitest",
-    "test:coverage": "vitest run --coverage"
-  },
+"scripts": {
+  "dev": "tsx --watch src/index.ts",
+  "build": "tsc --outDir dist",
+  "start": "node --enable-source-maps dist/index.js",
+  "test": "vitest run",
+  "test:watch": "vitest"
+},
   "keywords": [
     "habit-tracker",
     "api",
