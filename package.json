@@ -4,12 +4,17 @@
   "description": "Habit Tracker API for Node.js course",
   "main": "src/index.ts",
   "type": "module",
-"scripts": {
-  "dev": "tsx --watch src/index.ts",
-  "build": "tsc --outDir dist",
-  "start": "node --enable-source-maps dist/index.js",
-  "test": "vitest run",
-  "test:watch": "vitest"
+  "scripts": {
+    "dev": "tsx --watch src/index.ts",
+    "build": "tsc --outDir dist",
+    "start": "node --enable-source-maps dist/index.js",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "db:generate": "drizzle-kit generate",
+    "db:push": "drizzle-kit push",
+    "db:migrate": "drizzle-kit migrate",
+    "db:studio": "drizzle-kit studio",
+  "db:seed": "cross-env NODE_ENV=development APP_STAGE=dev tsx src/db/seed.ts"
 },
   "keywords": [
     "habit-tracker",
@@ -33,7 +38,6 @@
     "jose": "^6.0.12",
     "morgan": "^1.10.1",
     "pg": "^8.16.3",
-    "ts-node": "^10.9.2",
     "zod": "^4.0.17"
   },
   "devDependencies": {
@@ -46,8 +50,9 @@
     "cross-env": "^10.0.0",
     "drizzle-kit": "^0.31.4",
     "supertest": "^6.3.4",
-    "tsx": "^4.20.4",
-    "typescript": "^5.9.2",
+    "ts-node": "^10.9.2",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3",
     "vitest": "^3.2.4"
   }
 }
