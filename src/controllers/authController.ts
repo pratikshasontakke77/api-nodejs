@@ -1,5 +1,5 @@
 import type { Request, Response } from 'express'
-import { generateToken } from '.././utils/jwt.ts'
+import { generateToken } from '../utils/jwt.ts'
 import { comparePassword, hashPassword } from '../utils/password.ts'
 import { users, type NewUser } from '../db/schema.ts'
 import { db } from '../db/connection.ts'
