@@ -2,9 +2,7 @@ import { Router } from 'express'
 import {z} from 'zod';
 import { validateBody } from '../middleware/validation.ts';
 import { authenticateToken } from '../middleware/auth.ts'
-import { createHabit } from '../controllers/habitController.ts'
-import { desc } from 'drizzle-orm'
-import { trace } from 'console'
+import { createHabit, getUserHabits } from '../controllers/habitController.ts'
 
 const createHabitSchema = z.object({
   name: z.string(),
@@ -16,9 +14,7 @@ const createHabitSchema = z.object({
 const router = Router()
 router.use(authenticateToken)
 
-router.get('/', (req, res) => {
-  res.send({ message: 'Fetched all habits' })
-})
+router.get('/', getUserHabits)
 
 router.get('/:id', (req, res) => {
   res.send({ message: `Fetched habit with id ${req.params.id}` })

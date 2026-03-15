@@ -7,6 +7,7 @@ import { remember } from '@epic-web/remember'
 const createPool = () => {
   return new Pool({
     connectionString: env.DATABASE_URL,
+    ssl: { rejectUnauthorized: false },
   })
 }
 
