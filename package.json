@@ -14,8 +14,8 @@
     "db:push": "drizzle-kit push",
     "db:migrate": "drizzle-kit migrate",
     "db:studio": "drizzle-kit studio",
-  "db:seed": "cross-env NODE_ENV=development APP_STAGE=dev tsx src/db/seed.ts"
-},
+    "db:seed": "cross-env NODE_ENV=development APP_STAGE=dev tsx src/db/seed.ts"
+  },
   "keywords": [
     "habit-tracker",
     "api",
@@ -45,6 +45,7 @@
     "@types/cors": "^2.8.17",
     "@types/express": "^4.17.21",
     "@types/jest": "^29.5.14",
+    "@types/morgan": "^1.9.10",
     "@types/node": "^20.11.5",
     "@types/supertest": "^6.0.2",
     "cross-env": "^10.0.0",

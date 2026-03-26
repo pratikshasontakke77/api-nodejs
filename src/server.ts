@@ -6,6 +6,7 @@ import authRoutes from './routes/authRoutes.ts'
 import userRoutes from './routes/userRoutes.ts'
 import habitRoutes from './routes/habitRoutes.ts'
 import { isTest } from '../env.ts'
+import { APIError, errorHandler } from './middleware/errorHandler.ts'
 
 const app = express()
 app.use(helmet())
@@ -15,7 +16,7 @@ app.use(express.urlencoded({ extended: true }))
 app.use(
   morgan('dev', {
     skip: () => isTest(),
-  })
+  }),
 )
 
 app.get('/health', (req, res) => {
@@ -25,6 +26,8 @@ app.get('/health', (req, res) => {
 app.use('/api/auth', authRoutes)
 app.use('/api/users', userRoutes)
 app.use('/api/habits', habitRoutes)
+
+app.use(errorHandler)
 
 export { app }
 export default app
