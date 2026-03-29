@@ -1,10 +1,15 @@
-import { db } from '../../src/db/connection.ts'
-import { users, habits, entries, tags, habitTags } from '../../src/db/schema.ts'
-import { sql } from 'drizzle-orm'
+import { config } from 'dotenv'
 import { execSync } from 'child_process'
-import { th } from 'zod/locales'
 
 export default async function setup() {
+  // Load .env.test before any DB imports so env.ts picks up the right DATABASE_URL
+  process.env.APP_STAGE = 'test'
+  config({ path: '.env.test', override: true })
+
+  const { db } = await import('../../src/db/connection.ts')
+  const { users, habits, entries, tags, habitTags } = await import('../../src/db/schema.ts')
+  const { sql } = await import('drizzle-orm')
+
   console.log('Running global setup...')
 
   try {
@@ -15,10 +20,7 @@ export default async function setup() {
     await db.execute(sql`DROP TABLE IF EXISTS ${users} CASCADE`)
 
     console.log('Pushing schema using drizzle-kit...')
-    execSync(
-      `npx drizzle-kit push --url="${process.env.DATABASE_URL}" --schema="./src/db/schema.ts" --dialect="postgres"`,
-      { stdio: 'inherit', cwd: process.cwd() },
-    )
+    execSync('npx drizzle-kit push', { stdio: 'inherit', cwd: process.cwd() })
 
     console.log('Test DB created')
   } catch (error) {
@@ -27,18 +29,16 @@ export default async function setup() {
   }
 
   return async () => {
-   try {
-     await db.execute(sql`TRUNCATE TABLE ${habitTags} CASCADE`)
-     await db.execute(sql`TRUNCATE TABLE ${entries} CASCADE`)
-     await db.execute(sql`TRUNCATE TABLE ${habits} CASCADE`)
-     await db.execute(sql`TRUNCATE TABLE ${tags} CASCADE`)
-     await db.execute(sql`TRUNCATE TABLE ${users} CASCADE`)
-     console.log('Test DB destroyed')
-    
-   } catch (error) {
-     console.error('Error during global setup:', error)
-     throw error
-    
-   }
+    try {
+      await db.execute(sql`TRUNCATE TABLE ${habitTags} CASCADE`)
+      await db.execute(sql`TRUNCATE TABLE ${entries} CASCADE`)
+      await db.execute(sql`TRUNCATE TABLE ${habits} CASCADE`)
+      await db.execute(sql`TRUNCATE TABLE ${tags} CASCADE`)
+      await db.execute(sql`TRUNCATE TABLE ${users} CASCADE`)
+      console.log('Test DB destroyed')
+    } catch (error) {
+      console.error('Error during global teardown:', error)
+      throw error
+    }
   }
 }

@@ -75,4 +75,5 @@ export const cleanupDatabase = async () => {
   await db.delete(habits)
   await db.delete(habitTags)
   await db.delete(users)
+  await db.delete(tags)
 }

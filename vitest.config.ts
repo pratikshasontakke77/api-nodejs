@@ -4,6 +4,9 @@ export default defineConfig({
   test: {
     globals: true,
     globalSetup: ['./tests/setup/globalSetup.ts'],
+    env: {
+      APP_STAGE: 'test',
+    },
     // Automatically clean up after each test to ensure isolation
     clearMocks: true,
     restoreMocks: true,
