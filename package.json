@@ -8,7 +8,7 @@
     "dev": "tsx --watch src/index.ts",
     "build": "tsc --outDir dist",
     "start": "node --enable-source-maps dist/index.js",
-    "test": "vitest run",
+    "test": "cross-env APP_STAGE=test vitest run",
     "test:watch": "vitest",
     "db:generate": "drizzle-kit generate",
     "db:push": "drizzle-kit push",
